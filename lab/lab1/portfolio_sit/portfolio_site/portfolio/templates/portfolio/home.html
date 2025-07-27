@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>صفحتي الشخصية</title>
+    <style>
+        body { font-family: Arial, sans-serif; direction: rtl; padding: 20px; background: #f0f0f0; }
+        h1 { text-align: center; }
+        .project { background: white; margin-bottom: 20px; padding: 15px; border-radius: 8px; }
+        a { text-decoration: none; color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>أعمالي ومشاريعي</h1>
+    {% for project in projects %}
+        <div class="project">
+            <h2>{{ project.title }}</h2>
+            <p>{{ project.description }}</p>
+            {% if project.url %}
+                <p><a href="{{ project.url }}" target="_blank">رابط المشروع</a></p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>لا توجد مشاريع حالياً.</p>
+    {% endfor %}
+</body>
+</html>
