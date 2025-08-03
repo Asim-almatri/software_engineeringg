@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Three</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 700px; margin: 40px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #0001; padding: 30px; }
+        h1 { color: #0a7d3b; text-align: center; }
+        h2 { color: #333; font-size: 1.5em; margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+        th { background: #0a7d3b; color: #fff; }
+        tr:nth-child(even) { background: #f2f2f2; }
+        .back { display: block; margin: 20px auto 0; text-align: center; color: #0a7d3b; text-decoration: none; font-weight: bold; }
+        .back:hover { text-decoration: underline; }
+        .btn {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 5px;
+            font-size: 0.98em;
+            font-weight: 500;
+            text-decoration: none;
+            margin: 0 2px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-add {
+            background: #0a7d3b;
+            color: #fff;
+        }
+        .btn-add:hover {
+            background: #055a27;
+        }
+        .btn-edit {
+            background: #ffc107;
+            color: #333;
+        }
+        .btn-edit:hover {
+            background: #e0a800;
+        }
+        .btn-delete {
+            background: #e53935;
+            color: #fff;
+        }
+        .btn-delete:hover {
+            background: #b71c1c;
+        }
+        .course-list {
+            text-align: center;
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .course-list li {
+            display: inline-block;
+            margin: 0 10px 10px 0;
+            padding: 6px 16px;
+            background: #e8f5e9;
+            color: #0a7d3b;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Students List</h1>
+        
+        <h2>Courses for All Students</h2>
+        <ul class="course-list">
+            {% for course in courses %}
+                <li>{{ course.name }} ({{ course.code }})</li>
+            {% empty %}
+                <li style="color:#888;">No courses found.</li>
+            {% endfor %}
+        </ul>
+        
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Country</th>
+                <th>Grade</th>
+                <th>Numeric</th>
+                <th>Courses</th>
+                <th>Photo</th>
+                <th>
+                    <a href="{% url 'page:student_add' %}" class="btn btn-add">Add</a>
+                </th>
+            </tr>
+            {% for student in students %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.age }}</td>
+                <td>{{ student.country }}</td>
+                <td>{{ student.grade }}</td>
+                <td>{% with g=student.grade|upper %}{% if g == 'A+' %}100{% elif g == 'A' %}95{% elif g == 'A-' %}90{% elif g == 'B+' %}85{% elif g == 'B' %}80{% elif g == 'B-' %}75{% elif g == 'C+' %}70{% elif g == 'C' %}65{% elif g == 'C-' %}60{% elif g == 'D' %}50{% elif g == 'F' %}0{% else %}-{% endif %}{% endwith %}</td>
+                <td>
+                    {% for course in student.courses.all %}
+                        <span style="background:#e8f5e9;color:#0a7d3b;padding:2px 8px;border-radius:6px;margin:1px 2px;display:inline-block;">{{ course.name }}</span>
+                    {% empty %}
+                        <span style="color:#888;">No courses</span>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% if student.photo %}
+                        <img src="{{ student.photo.url }}" alt="photo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px #0002;">
+                    {% else %}
+                        <span style="color:#888;">No photo</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'page:student_edit' student.pk %}" class="btn btn-edit">Edit</a>
+                    <a href="{% url 'page:student_delete' student.pk %}" class="btn btn-delete">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="8">No students found.</td></tr>
+            {% endfor %}
+        </table>
+        {% if avg %}
+        <div style="margin-top:20px;text-align:center;font-size:1.1em;color:#0a7d3b;">
+            <strong>Average Grade:</strong> {{ avg|floatformat:2 }}
+        </div>
+        {% endif %}
+        <a class="back" href="/">Back to Home</a>
+    </div>
+</body>
+</html>
