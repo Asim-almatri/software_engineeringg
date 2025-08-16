@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم</title>
+  <style>
+    /* الأسلوب العام للصفحة */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8; /* خلفية فاتحة ومريحة */
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+      text-align: right;
+    }
+
+    /* حاوية المحتوى الرئيسية */
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+    }
+
+    /* عنوان لوحة التحكم */
+    h1 {
+      color: #1a237e;
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    /* عنوان الأقسام */
+    h2 {
+      color: #37474f;
+      margin-top: 35px;
+      text-align: center;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 10px;
+    }
+
+    /* قائمة الروابط */
+    .links-list {
+      list-style: none;
+      padding: 0;
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .links-list li a {
+      color: #0d47a1;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1em;
+      padding: 10px 15px;
+      border: 2px solid #0d47a1;
+      border-radius: 25px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .links-list li a:hover {
+      background: #0d47a1;
+      color: #ffffff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>لوحة تحكم النظام 📊</h1>
+
+    ---
+    
+        <h2>إدارة المعلمين 🧑‍🏫</h2>
+    <ul class="links-list">
+            <li><a href="{% url 'page:teachers_list' %}">عرض قائمة المعلمين</a></li>
+            <li><a href="{% url 'page:teacher_add' %}">إضافة معلم جديد</a></li>
+    </ul>
+
+    ---
+    
+        <h2>إدارة الطلاب 🧑‍🎓</h2>
+    <ul class="links-list">
+            <li><a href="{% url 'page:students_list' %}">عرض قائمة الطلاب</a></li>
+            <li><a href="{% url 'page:student_add' %}">إضافة طالب جديد</a></li>
+    </ul>
+
+    ---
+
+        <h2>إدارة الدورات 📚</h2>
+    <ul class="links-list">
+            <li><a href="{% url 'page:courses_list' %}">عرض قائمة الدورات</a></li>
+            <li><a href="{% url 'page:course_add' %}">إضافة دورة جديدة</a></li>
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+ <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأكيد الحذف</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background: #f7f7f7; direction: rtl; text-align: right; }
+        .container { max-width: 500px; margin: 40px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 30px; text-align: center; }
+        h1 { color: #e53935; }
+        p { color: #555; font-size: 1.1em; }
+        .btn-group { margin-top: 20px; display: flex; justify-content: center; gap: 15px; }
+        .btn { padding: 10px 20px; border-radius: 5px; font-weight: bold; text-decoration: none; transition: background 0.2s; }
+        .btn-delete { background: #e53935; color: #fff; border: none; cursor: pointer; }
+        .btn-delete:hover { background: #b71c1c; }
+        .btn-cancel { background: #ccc; color: #333; }
+        .btn-cancel:hover { background: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تأكيد الحذف</h1>
+        <p>هل أنت متأكد أنك تريد حذف المعلم **"{{ teacher.name }}"**؟</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="btn-group">
+                <button type="submit" class="btn btn-delete">حذف</button>
+                <a href="{% url 'page:teachers_list' %}" class="btn btn-cancel">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

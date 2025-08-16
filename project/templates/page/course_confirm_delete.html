@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Course</title>
+    <style>
+        body { background: #f7f7f7; font-family: 'Segoe UI', Arial, sans-serif; }
+        .container { max-width: 400px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0002; padding: 32px; }
+        h1 { color: #e53935; text-align: center; margin-bottom: 20px; }
+        p { text-align: center; color: #444; }
+        form { text-align: center; }
+        button { background: #e53935; color: #fff; border: none; border-radius: 5px; padding: 10px 30px; font-size: 1.1em; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #b71c1c; }
+        .back { display: block; margin: 20px auto 0; text-align: center; color: #0a7d3b; text-decoration: none; font-weight: bold; }
+        .back:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Delete Course</h1>
+        <p>Are you sure you want to delete <strong>{{ course.name }}</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+        <a class="back" href="{% url 'page:courses_list' %}">Back to Courses</a>
+    </div>
+</body>
+</html>
