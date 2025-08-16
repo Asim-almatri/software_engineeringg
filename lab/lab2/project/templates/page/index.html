@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body { background: #f7f7f7; font-family: 'Segoe UI', Arial, sans-serif; }
+        .container { max-width: 700px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0002; padding: 32px; }
+        h1 { color: #0a7d3b; text-align: center; margin-bottom: 10px; }
+        .info { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 24px; }
+        .info-item { background: #e8f5e9; border-radius: 8px; padding: 16px 24px; min-width: 120px; text-align: center; box-shadow: 0 1px 4px #0001; }
+        .info-item strong { color: #0a7d3b; font-size: 1.1em; }
+        .desc { text-align: center; margin-bottom: 24px; color: #444; }
+        h2 { color: #333; margin-top: 30px; }
+        ul { list-style: none; padding: 0; text-align: center; }
+        ul li { display: inline-block; margin: 0 12px; }
+        ul li a { color: #0a7d3b; text-decoration: none; font-weight: bold; font-size: 1.1em; transition: color 0.2s; }
+        ul li a:hover { color: #055a27; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ name|title }}</h1>
+        <div class="info">
+            <div class="info-item"><strong>Name Length:</strong><br>{{ name|length }}</div>
+            <div class="info-item"><strong>Size:</strong><br>{{ size|filesizeformat }}</div>
+            <div class="info-item"><strong>Country:</strong><br>{{ country|upper }}</div>
+            <div class="info-item"><strong>City:</strong><br>{{ city|cut:'a' }}</div>
+            {% if student and student.photo %}
+            <div class="info-item">
+                <strong>Photo:</strong><br>
+                <img src="{{ student.photo.url }}" alt="photo" style="width:64px;height:64px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px #0002;">
+            </div>
+            {% endif %}
+        </div>
+        <div class="desc">
+            This is the index page of the Django application.<br>
+            Explore the links below to visit other pages.
+        </div>
+        <h2>Links to other pages:</h2>
+        <ul>
+            <li><a href="{% url 'page:one' %}">One</a></li>
+            <li><a href="{% url 'page:two' %}">Two</a></li>
+            <li><a href="{% url 'page:three' %}">Three</a></li>
+        </ul>
+        <h2>Courses</h2>
+        <ul>
+            <li><a href="{% url 'page:courses_list' %}" style="color:#0a7d3b;font-weight:bold;">View All Courses</a></li>
+            <li><a href="{% url 'page:course_add' %}" style="color:#0a7d3b;font-weight:bold;">Add New Course (English)</a></li>
+        </ul>
+    </div>
+</body>
+</html>
