@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ action }} Teacher</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background: #f7f7f7; direction: rtl; text-align: right; }
+        .container { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 30px; }
+        h1 { color: #0a7d3b; text-align: center; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        .form-group { display: flex; flex-direction: column; }
+        label { margin-bottom: 5px; color: #333; font-weight: bold; }
+        input, select { padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .btn-submit {
+            padding: 12px;
+            background: #0a7d3b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover {
+            background: #055a27;
+        }
+        .back-link { display: block; margin-top: 20px; text-align: center; color: #0a7d3b; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ action }} معلم</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-submit">{{ action }}</button>
+        </form>
+        <a href="{% url 'page:teachers_list' %}" class="back-link">العودة إلى قائمة المعلمين</a>
+    </div>
+</body>
+</html>
