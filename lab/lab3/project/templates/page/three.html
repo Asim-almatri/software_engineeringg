@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قائمة الطلاب</title>
+    <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8; /* خلفية فاتحة ومريحة */
+      direction: rtl; /* اتجاه الكتابة من اليمين لليسار */
+      text-align: right;
+    }
+    .container {
+      max-width: 950px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+    }
+    h1 {
+      color: #1a237e; /* لون أزرق غامق */
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    /* تنسيق الجدول */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      text-align: center;
+    }
+    th {
+      background: #1a237e;
+      color: #fff;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background: #f5f5f5;
+    }
+    /* تنسيق الأزرار */
+    .btn {
+      display: inline-block;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 0 5px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn-add { background: #4caf50; color: #fff; }
+    .btn-add:hover { background: #388e3c; }
+    .btn-edit { background: #ffc107; color: #333; }
+    .btn-edit:hover { background: #ffa000; }
+    .btn-delete { background: #e53935; color: #fff; }
+    .btn-delete:hover { background: #b71c1c; }
+    /* تنسيق قائمة الدورات */
+    .course-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px auto;
+      text-align: center;
+    }
+    .course-list li {
+      display: inline-block;
+      margin: 0 10px 10px 0;
+      padding: 8px 18px;
+      background: #e3f2fd;
+      color: #1a237e;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    /* تنسيق الصورة */
+    .student-photo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ccc;
+    }
+    /* تنسيق العودة */
+    .back {
+      display: block;
+      margin: 20px auto 0;
+      text-align: center;
+      color: #1a237e;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1em;
+      transition: color 0.3s;
+    }
+    .back:hover {
+      color: #0d47a1;
+      text-decoration: underline;
+    }
+    /* تنسيق الرسالة الفارغة */
+    .empty-message {
+      text-align: center;
+      color: #888;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>قائمة الطلاب</h1>
+    
+        <h2 style="text-align:center;">الدورات المتاحة 📚</h2>
+    <ul class="course-list">
+      {% for course in courses %}
+        <li>{{ course.name }} ({{ course.code }})</li>
+      {% empty %}
+        <li class="empty-message">لا توجد دورات مسجلة.</li>
+      {% endfor %}
+    </ul>
+    
+        <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>الاسم</th>
+          <th>العمر</th>
+          <th>البلد</th>
+          <th>التقدير</th>
+          <th>الدرجة</th>
+          <th>الدورات</th>
+          <th>صورة</th>
+          <th>
+            <a href="{% url 'page:student_add' %}" class="btn btn-add">إضافة طالب</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.age }}</td>
+          <td>{{ student.country }}</td>
+          <td>{{ student.grade }}</td>
+          <td>
+                        {% with g=student.grade|upper %}
+              {% if g == 'A+' %}100
+              {% elif g == 'A' %}95
+              {% elif g == 'A-' %}90
+              {% elif g == 'B+' %}85
+              {% elif g == 'B' %}80
+              {% elif g == 'B-' %}75
+              {% elif g == 'C+' %}70
+              {% elif g == 'C' %}65
+              {% elif g == 'C-' %}60
+              {% elif g == 'D' %}50
+              {% elif g == 'F' %}0
+              {% else %}-
+              {% endif %}
+            {% endwith %}
+          </td>
+          <td>
+            {% for course in student.courses.all %}
+              <span style="background:#e3f2fd;color:#1a237e;padding:4px 10px;border-radius:15px;margin:2px;display:inline-block;">{{ course.name }}</span>
+            {% empty %}
+              <span class="empty-message">لا توجد دورات</span>
+            {% endfor %}
+          </td>
+          <td>
+            {% if student.photo %}
+              <img src="{{ student.photo.url }}" alt="صورة الطالب" class="student-photo">
+            {% else %}
+              <span class="empty-message">لا توجد صورة</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'page:student_edit' student.pk %}" class="btn btn-edit">تعديل</a>
+            <a href="{% url 'page:student_delete' student.pk %}" class="btn btn-delete">حذف</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9" class="empty-message">لا يوجد طلاب مسجلون حاليًا.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+        {% if avg %}
+    <div style="margin-top:30px;text-align:center;font-size:1.2em;color:#1a237e;font-weight:bold;">
+      متوسط درجات الطلاب: {{ avg|floatformat:2 }}
+    </div>
+    {% endif %}
+
+        <a class="back" href="/">العودة إلى الرئيسية</a>
+  </div>
+</body>
+</html>
