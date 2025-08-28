@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="section-header">
+    <h2>قائمة الدرجات</h2>
+    <div class="actions-group">
+        <a href="{% url 'add_grade' %}" class="add-link">إضافة درجة جديدة</a>
+    </div>
+</div>
+<div class="search-container">
+    <form class="search-form" action="{% url 'grades_list' %}" method="get">
+        <input type="text" name="q" placeholder="ابحث بالاسم..." value="{{ request.GET.q }}">
+        <button type="submit">بحث</button>
+    </form>
+</div>
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>الطالب</th>
+                <th>الدورة</th>
+                <th>الدرجة</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for grade in grade %}
+            <tr>
+                <td><a href="{% url 'student_detail' grade.student.pk %}">{{ grade.student.name }}</a></td>
+                <td><a href="{% url 'course_detail' grade.course.pk %}">{{ grade.course.name }}</a></td>
+                <td>{{ grade.score }}</td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="{% url 'grade_detail' grade.pk %}">عرض</a>
+                        <a href="{% url 'grade_edit' grade.pk %}">تعديل</a>
+                        <a href="{% url 'grade_delete' grade.pk %}" class="delete-btn">حذف</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">لا يوجد درجات.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!-- students/templates/students/student_view.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="view-container">
+    <h2>بيانات الطالب: {{ student.name }}</h2>
+    <p><strong>الرقم الأكاديمي:</strong> {{ student.student_id }}</p>
+    <p><strong>البريد الإلكتروني:</strong> {{ student.email }}</p>
+    <p><strong>رقم الهاتف:</strong> {{ student.phone }}</p>
+    
+    <h3>الدورات المسجل بها:</h3>
+    {% if enrolled_courses %}
+        <ul>
+            {% for enrollment in enrolled_courses %}
+                <li><a href="{% url 'course_view' enrollment.course.pk %}">{{ enrollment.course.title }}</a> - تاريخ التسجيل: {{ enrollment.enrollment_date|date:"Y-m-d" }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>لم يتم تسجيل الطالب في أي دورات بعد.</p>
+    {% endif %}
+
+    <h3 style="margin-top: 3rem;">درجات الطالب:</h3>
+    {% if grades %}
+        <ul>
+            {% for grade in grades %}
+                <li>
+                    <span class="grade-item">
+                        <span>{{ grade.course.title }} - {{ grade.grade_type }}</span>
+                        <span class="grade-value">{{ grade.grade }}%</span>
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>لا توجد درجات مسجلة لهذا الطالب.</p>
+    {% endif %}
+
+    <a href="{% url 'students_list' %}" class="action-btn" style="margin-top: 2rem;">العودة إلى قائمة الطلاب</a>
+</div>
+{% endblock content %}

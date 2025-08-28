@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-header">
+    <h2>قائمة الطلاب</h2>
+    <div class="actions-group">
+        <a href="{% url 'student_add' %}" class="add-link">إضافة طالب جديد</a>
+    </div>
+</div>
+
+<div class="search-container">
+    <form method="GET" class="search-form">
+        <input type="text" name="q" placeholder="ابحث باسم الطالب أو الرقم الأكاديمي" value="{{ request.GET.q }}">
+        <button type="submit">بحث</button>
+    </form>
+</div>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>الصورة</th>
+                <th>الاسم</th>
+                <th>الرقم الأكاديمي</th>
+                <th>البريد الإلكتروني</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>
+                    {% if student.photo %}
+                        <img src="{{ student.photo.url }}" alt="صورة {{ student.name }}" class="student-photo-small">
+                    {% else %}
+                        <img src="https://placehold.co/60x60/A0B9D6/ffffff?text=لا+صورة" alt="لا توجد صورة" class="student-photo-small">
+                    {% endif %}
+                </td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.student_id }}</td>
+                <td>{{ student.email }}</td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="{% url 'student_detail' student.pk %}">عرض</a>
+                        <a href="{% url 'student_edit' student.pk %}">تعديل</a>
+                        <a href="{% url 'student_delete' student.pk %}" class="delete-btn">حذف</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align:center;">لا يوجد طلاب حالياً.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

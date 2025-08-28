@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="header">
+    <h1>لوحة التحكم 📊</h1>
+</div>
+<div class="container">
+    <div class="dashboard-grid">
+        <div class="card">
+            <h2>إجمالي المعلمين</h2>
+            <p>{{ total_teachers }}</p>
+        </div>
+        <div class="card">
+            <h2>إجمالي الطلاب</h2>
+            <p>{{ total_students }}</p>
+        </div>
+        <div class="card">
+            <h2>إجمالي الدورات</h2>
+            <p>{{ total_courses }}</p>
+        </div>
+        <div class="card">
+            <h2>إجمالي الدرجات</h2>
+            <p>{{ total_grades }}</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

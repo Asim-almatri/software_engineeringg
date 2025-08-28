@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="view-container">
+    <div class="view-header">
+        <div>
+            <h2>درجة الطالب: {{ grade.student.name }}</h2>
+            <p><strong>الدورة:</strong> <a href="{% url 'course_detail' grade.course.pk %}">{{ grade.course.name }}</a></p>
+            <p><strong>الدرجة:</strong> {{ grade.score }}</p>
+            <p><strong>الملاحظات:</strong> {{ grade.comments|default:"لا يوجد ملاحظات" }}</p>
+        </div>
+    </div>
+    <div class="action-buttons">
+        <a href="{% url 'grade_edit' grade.pk %}" class="action-btn">تعديل الدرجة</a>
+        <a href="{% url 'grades_list' %}" class="action-btn">العودة إلى القائمة</a>
+    </div>
+</div>
+{% endblock %}

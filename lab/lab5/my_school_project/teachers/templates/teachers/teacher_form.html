@@ -1,0 +1,12 @@
+<!-- teachers/templates/teachers/teacher_form.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="form-container">
+    <h2>{{ page_title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">حفظ</button>
+    </form>
+</div>
+{% endblock content %}

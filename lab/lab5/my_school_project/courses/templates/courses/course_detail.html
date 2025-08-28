@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="view-container">
+    <div class="view-header">
+        <div>
+            <h2>{{ course.name }}</h2>
+            <p><strong>المعلم:</strong> {{ course.teacher.name|default:"غير محدد" }}</p>
+            <p><strong>الوصف:</strong> {{ course.description|default:"لا يوجد وصف" }}</p>
+        </div>
+    </div>
+    
+    <h3>الطلاب المسجلون</h3>
+    <ul>
+        {% for student in course.students.all %}
+        <li><a href="{% url 'student_detail' student.pk %}">{{ student.name }}</a></li>
+        {% empty %}
+        <li>لا يوجد طلاب مسجلون في هذه الدورة.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>درجات الطلاب في هذه الدورة</h3>
+    <ul>
+        {% for grade in grades %}
+        <li>
+            <div class="grade-item">
+                <a href="{% url 'grade_detail' grade.pk %}">{{ grade.student.name }}</a>
+                <span class="grade-value">الدرجة: {{ grade.score }}</span>
+            </div>
+        </li>
+        {% empty %}
+        <li>لا توجد درجات مسجلة لهذه الدورة.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="action-buttons">
+        <a href="{% url 'courses:course_edit' course.pk %}" class="action-btn">تعديل الدورة</a>
+        <a href="{% url 'courses:courses_list' %}" class="action-btn">العودة إلى القائمة</a>
+    </div>
+</div>
+{% endblock %}

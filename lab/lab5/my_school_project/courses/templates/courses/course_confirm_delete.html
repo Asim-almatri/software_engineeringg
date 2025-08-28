@@ -1,0 +1,13 @@
+<!-- courses/templates/courses/course_confirm_delete.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="form-container">
+    <h2>تأكيد الحذف</h2>
+    <p>هل أنت متأكد من حذف الدورة: <strong>{{ course.title }}</strong>؟</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="action-btn delete-btn">نعم، احذف</button>
+        <a href="{% url 'courses_list' %}" class="action-btn" style="background: #95a5a6;">إلغاء</a>
+    </form>
+</div>
+{% endblock content %}

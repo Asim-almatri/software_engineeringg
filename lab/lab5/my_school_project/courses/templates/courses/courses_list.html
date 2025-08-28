@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="section-header">
+    <h2>قائمة الدورات</h2>
+    <div class="actions-group">
+       <a href="{% url 'courses:add_course' %}" class="add-link">إضافة دورة جديدة</a>
+
+    </div>
+</div>
+<div class="search-container">
+    <form class="search-form" action="{% url 'courses:courses_list' %}" method="get">
+        <input type="text" name="q" placeholder="ابحث بالاسم..." value="{{ request.GET.q }}">
+        <button type="submit">بحث</button>
+    </form>
+</div>
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>اسم الدورة</th>
+                <th>المعلم</th>
+                <th>عدد الطلاب</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td><a href="{% url 'courses:course_detail' course.pk %}">{{ course.name }}</a></td>
+                <td>{{ course.teacher.name|default:"غير محدد" }}</td>
+                <td>{{ course.students.count }}</td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="{% url 'courses:course_edit' course.pk %}">تعديل</a>
+                        <a href="{% url 'courses:course_delete' course.pk %}" class="delete-btn">حذف</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">لا يوجد دورات.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

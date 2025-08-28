@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="section-header">
+    <h2>قائمة المعلمين</h2>
+    <div class="actions-group">
+        <a href="{% url 'teacher_add' %}" class="add-link">إضافة معلم جديد</a>
+    </div>
+</div>
+<div class="search-container">
+    <form action="{% url 'teachers_list' %}" method="get" class="search-form">
+        <input type="text" name="q" placeholder="ابحث بالاسم أو التخصص..." value="{{ request.GET.q }}">
+        <button type="submit">بحث</button>
+    </form>
+</div>
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>التخصص</th>
+                <th>البريد الإلكتروني</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teachers %}
+            <tr>
+                <td>{{ teacher.name }}</td>
+                <td>{{ teacher.specialty }}</td>
+                <td>{{ teacher.email }}</td>
+                <td class="action-buttons">
+                    <a href="{% url 'teacher_edit' teacher.pk %}">تعديل</a>
+                    <a href="{% url 'teacher_delete' teacher.pk %}" class="delete-btn">حذف</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">لا يوجد معلمين.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

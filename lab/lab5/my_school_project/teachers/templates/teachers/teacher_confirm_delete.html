@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="form-container">
+    <h2>تأكيد الحذف</h2>
+    <p>هل أنت متأكد من حذف المعلم: <strong>{{ teacher.name }}</strong>؟</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="action-btn delete-btn">نعم، احذف</button>
+        <a href="{% url 'teachers_list' %}" class="action-btn" style="background: #95a5a6;">إلغاء</a>
+    </form>
+</div>
+{% endblock content %}
